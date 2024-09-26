@@ -1,0 +1,7 @@
+name: Addons
+version: '1.0-SNAPSHOT'
+main: phrase.addons.Addons
+api-version: '1.18'
+commands:
+  workbench: {}
+
