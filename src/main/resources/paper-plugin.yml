@@ -4,4 +4,12 @@ main: phrase.addons.Addons
 api-version: '1.18'
 commands:
   workbench: {}
+  ec: {}
+  hat: {}
+  invsee: {}
+  setwarp: {}
+  warp: {}
+  delwarp: {}
+  ext: {}
+
 
