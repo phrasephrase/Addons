@@ -19,7 +19,7 @@ public class Hat implements CommandExecutor {
         }
 
         Player player = (Player) commandSender;
-        ItemStack item = player.getActiveItem();
+        ItemStack item = player.getItemInHand();
 
         if (item == null) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fУ вас нет предмета в руке!"));

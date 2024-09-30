@@ -7,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.WarpInfo;
+
 
 public class Warp implements CommandExecutor {
 
@@ -25,8 +27,11 @@ public class Warp implements CommandExecutor {
         }
 
         Player player = (Player) commandSender;
-        Location locationWarp = setWarp.findWarp(strings[1]);
-        player.teleport(locationWarp);
+        WarpInfo warp = setWarp.findWarp(strings[1]);
+        if(warp == null) {
+
+        }
+        player.teleport(warp.getLocation());
         commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно телепортированы на варп " + strings[1]));
 
 

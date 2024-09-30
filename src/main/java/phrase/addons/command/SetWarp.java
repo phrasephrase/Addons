@@ -7,13 +7,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.WarpInfo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class SetWarp implements CommandExecutor  {
 
-    private HashMap<String, Location> warp = new HashMap<>();
+    private HashMap<String, Warp> warps = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
@@ -29,26 +31,34 @@ public class SetWarp implements CommandExecutor  {
 
         Player player = (Player) commandSender;
 
-        if(warp.containsKey(strings[1])) {
+        if(warps.containsKey(strings[1])) {
             commandSender.sendMessage("&a[>>] Инфо: &fВарп с таким названием уже существует!");
         }
-
         Location locationWarp = player.getLocation();
-        warp.put(strings[1], locationWarp);
+        WarpInfo warp = new WarpInfo(player.getUniqueId(), locationWarp);
+        warps.put(strings[1], warp);
         commandSender.sendMessage("&a[>>] Инфо: &fВы успешно создали варп с названием &6" + strings[1]);
 
         return true;
     }
 
-    public Location findWarp(String name) {
-        if(!(warp.containsKey(name))) {
+    public WarpInfo findWarp(String name) {
+        WarpInfo warp = null;
+        if(!warps.containsKey(name)) {
         }
-        for(Map.Entry<String, Location> entry: warp.entrySet()) {
-            if(!(entry.getKey().equals(name))) {
-            }
-            Location value = entry.getValue();
-            return value;
+        for(Map.Entry<String, Warp> entry : warps.entrySet()) {
+            warp = (WarpInfo) entry.getValue();
+            return warp;
         }
+        return warp;
+    }
+
+    public boolean delWarp(String name) {
+        if(!warps.containsKey(name)) {
+            return false;
+        }
+        warps.remove(name);
+        return true;
     }
 
     public String color(String string) {

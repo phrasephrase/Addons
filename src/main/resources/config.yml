@@ -1,0 +1,8 @@
+messages:
+  signInMessage: "[>>] Инфо: "
+  notPlayer: "Вы не являетесь игроком!"
+  openEnderChest: "Вы успешно открыли виртуальный сундук!"
+  notFirePlayer: "Вы не горите!"
+  putOutPlayer: "Вы были потушены!"
+  notItem: "У вас нет предмета в руке!"
+  putOnHead: "Вы успешно надели предмет на голову!"
