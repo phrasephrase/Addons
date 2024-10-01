@@ -11,5 +11,8 @@ commands:
   warp: {}
   delwarp: {}
   ext: {}
+  tpa: {}
+  tpaccept: {}
+  tpdeny: {}
 
 
