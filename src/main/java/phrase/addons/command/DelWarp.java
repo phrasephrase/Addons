@@ -27,6 +27,7 @@ public class DelWarp implements CommandExecutor {
             commandSender.sendMessage("");
         }
         if(!(warp.getOwner() == player.getUniqueId())) {
+            commandSender.sendMessage("");
         }
         setWarp.delWarp(strings[1]);
         commandSender.sendMessage("");
