@@ -21,18 +21,21 @@ public class Tpa implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage("0");
+            return true;
         }
 
         Player player = (Player) commandSender;
 
         if(strings.length < 1) {
             commandSender.sendMessage("1");
+            return true;
         }
 
         Player targetPlayer = Bukkit.getPlayer(strings[1]);
 
         if(targetPlayer.isOnline() || targetPlayer == null) {
             commandSender.sendMessage("2");
+            return true;
         }
 
         players.put(targetPlayer.getUniqueId(), player.getUniqueId());

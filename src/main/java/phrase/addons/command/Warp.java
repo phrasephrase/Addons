@@ -20,16 +20,18 @@ public class Warp implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            return true;
         }
 
         if(strings.length < 1) {
             commandSender.sendMessage(color("&a[>>] Инфо: &f/warp <name>"));
+            return true;
         }
 
         Player player = (Player) commandSender;
         WarpInfo warp = setWarp.findWarp(strings[1]);
         if(warp == null) {
-
+            return true;
         }
         player.teleport(warp.getLocation());
         commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно телепортированы на варп " + strings[1]));

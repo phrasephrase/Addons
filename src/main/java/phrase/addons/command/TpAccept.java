@@ -20,6 +20,7 @@ public class TpAccept implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage("0");
+            return true;
         }
 
         Player targetPlayer = (Player) commandSender;
@@ -29,6 +30,7 @@ public class TpAccept implements CommandExecutor {
 
         if(player == null) {
             System.out.println("1");
+            return true;
         }
 
         targetPlayer.sendMessage("2");

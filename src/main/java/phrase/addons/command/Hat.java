@@ -16,6 +16,7 @@ public class Hat implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            return true;
         }
 
         Player player = (Player) commandSender;
@@ -23,6 +24,7 @@ public class Hat implements CommandExecutor {
 
         if (item == null) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fУ вас нет предмета в руке!"));
+            return true;
         }
 
         player.getInventory().setHelmet(item);

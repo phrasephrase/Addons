@@ -15,6 +15,7 @@ public class Fly implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage("0");
+            return true;
         }
 
         Player player = (Player) commandSender;
@@ -22,6 +23,7 @@ public class Fly implements CommandExecutor {
         if(player.isFlying()) {
             player.setFlying(false);
             commandSender.sendMessage("1");
+            return true;
         }
 
         player.setFlying(true);

@@ -16,6 +16,7 @@ public class God implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage("0");
+            return true;
         }
 
         Player player = (Player) commandSender;
@@ -23,6 +24,7 @@ public class God implements CommandExecutor {
         if(player.getGameMode() == GameMode.CREATIVE) {
             player.setGameMode(GameMode.SURVIVAL);
             commandSender.sendMessage("1");
+            return true;
         }
 
         player.setGameMode(GameMode.CREATIVE);

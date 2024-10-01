@@ -16,12 +16,14 @@ public class Ext implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            return true;
         }
 
         Player player = (Player) commandSender;
 
         if(!(player.getFireTicks() > 0)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fВы не горите!"));
+            return true;
         }
 
         player.setFireTicks(0);

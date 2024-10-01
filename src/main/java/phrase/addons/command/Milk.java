@@ -20,6 +20,7 @@ public class Milk implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage("0");
+            return true;
         }
 
         Player player = (Player) commandSender;
@@ -29,6 +30,7 @@ public class Milk implements CommandExecutor {
 
         if(badEffect == null) {
             commandSender.sendMessage("1");
+            return true;
         }
 
         badEffect.stream().forEach(effect -> player.removePotionEffect(effect.getType()));

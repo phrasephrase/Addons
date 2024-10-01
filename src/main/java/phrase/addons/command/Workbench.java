@@ -18,6 +18,7 @@ public class Workbench implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            return true;
         }
 
         Player player = (Player) commandSender;

@@ -18,10 +18,12 @@ public class InventorySee implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            return true;
         }
 
         if(strings.length > 1) {
             commandSender.sendMessage(color("&a[>>] Инфо: &f/invsee <name>"));
+            return true;
         }
 
         Player player = (Player) commandSender;

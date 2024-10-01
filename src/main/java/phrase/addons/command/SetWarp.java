@@ -23,16 +23,19 @@ public class SetWarp implements CommandExecutor  {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            return true;
         }
 
         if(strings.length < 1) {
             commandSender.sendMessage(color("&a[>>] Инфо: &f/setwarp <name>"));
+            return true;
         }
 
         Player player = (Player) commandSender;
 
         if(warps.containsKey(strings[1])) {
             commandSender.sendMessage("&a[>>] Инфо: &fВарп с таким названием уже существует!");
+            return true;
         }
         Location locationWarp = player.getLocation();
         WarpInfo warp = new WarpInfo(player.getUniqueId(), locationWarp);

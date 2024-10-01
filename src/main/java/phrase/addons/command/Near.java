@@ -16,6 +16,7 @@ public class Near implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage("0");
+            return true;
         }
 
         Player player = (Player) commandSender;
@@ -25,8 +26,16 @@ public class Near implements CommandExecutor {
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(p != player && p.getLocation().distance(player.getLocation()) <= 100) {
                 nearblyPlayers.append(p.getName());
+                return true;
             }
         }
+
+        if(nearblyPlayers.toString().equals("1: ")) {
+            commandSender.sendMessage("2");
+            return true;
+        }
+
+        commandSender.sendMessage(nearblyPlayers.toString());
 
         return true;
     }

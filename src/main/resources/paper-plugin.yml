@@ -14,5 +14,10 @@ commands:
   tpa: {}
   tpaccept: {}
   tpdeny: {}
+  fly: {}
+  god: {}
+  milk: {}
+  near: {}
+
 
 

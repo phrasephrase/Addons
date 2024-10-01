@@ -18,6 +18,7 @@ public class DelWarp implements CommandExecutor {
 
         if(!(commandSender instanceof Player)) {
             commandSender.sendMessage("");
+            return true;
         }
 
         Player player = (Player) commandSender;
@@ -25,9 +26,11 @@ public class DelWarp implements CommandExecutor {
         WarpInfo warp = (WarpInfo) setWarp.findWarp(strings[1]);
         if(warp == null) {
             commandSender.sendMessage("");
+            return true;
         }
         if(!(warp.getOwner() == player.getUniqueId())) {
             commandSender.sendMessage("");
+            return true;
         }
         setWarp.delWarp(strings[1]);
         commandSender.sendMessage("");
