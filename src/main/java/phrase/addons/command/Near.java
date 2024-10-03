@@ -15,23 +15,24 @@ public class Near implements CommandExecutor {
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage("0");
+            commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
             return true;
         }
 
         Player player = (Player) commandSender;
 
-        StringBuilder nearblyPlayers = new StringBuilder("1: ");
+        StringBuilder nearblyPlayers = new StringBuilder(color("&a[>>] Инфо: &fРядом с вами: "));
 
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(p != player && p.getLocation().distance(player.getLocation()) <= 100) {
                 nearblyPlayers.append(p.getName());
+                nearblyPlayers.append(", ");
                 return true;
             }
         }
 
-        if(nearblyPlayers.toString().equals("1: ")) {
-            commandSender.sendMessage("2");
+        if(nearblyPlayers.toString().equals(color("&a[>>] Инфо: &fРядом с вами: "))) {
+            commandSender.sendMessage(color("&a[>>] Инфо: &fРядом с вами нет игроков!"));
             return true;
         }
 

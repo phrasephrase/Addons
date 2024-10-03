@@ -20,14 +20,14 @@ public class Fly implements CommandExecutor {
 
         Player player = (Player) commandSender;
 
-        if(player.isFlying()) {
+        if(player.getAllowFlight()) {
             player.setFlying(false);
-            commandSender.sendMessage("1");
+            commandSender.sendMessage("&a[>>] Инфо: &fВы выключили режим полета!");
             return true;
         }
 
         player.setFlying(true);
-        commandSender.sendMessage("2");
+        commandSender.sendMessage("&a[>>] Инфо: &fВы включили режим полета!");
 
         return true;
     }

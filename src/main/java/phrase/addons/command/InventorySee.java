@@ -21,14 +21,18 @@ public class InventorySee implements CommandExecutor {
             return true;
         }
 
-        if(strings.length > 1) {
+        if(strings.length < 0) {
             commandSender.sendMessage(color("&a[>>] Инфо: &f/invsee <name>"));
             return true;
         }
 
         Player player = (Player) commandSender;
-        String name = strings[1];
+        String name = strings[0];
         Player targetPlayer = Bukkit.getPlayer(name);
+
+        if(targetPlayer.isOnline()) {
+            commandSender.sendMessage(color("&a[>>] Инфо: &fИгрок не найден!"));
+        }
 
         player.openInventory(targetPlayer.getInventory());
         commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно открыли инвентарь &6" + targetPlayer.getName()));

@@ -2,6 +2,7 @@ package phrase.addons.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,12 +23,13 @@ public class Hat implements CommandExecutor {
         Player player = (Player) commandSender;
         ItemStack item = player.getItemInHand();
 
-        if (item == null) {
+        if (item.equals(Material.AIR)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fУ вас нет предмета в руке!"));
             return true;
         }
 
         player.getInventory().setHelmet(item);
+        commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно надели предмет на голову!"));
 
         return true;
     }

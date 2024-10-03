@@ -25,16 +25,16 @@ public class Milk implements CommandExecutor {
 
         Player player = (Player) commandSender;
 
-        List<PotionEffect> badEffect =  player.getActivePotionEffects().stream().filter(effect -> effect.getType().getEffectCategory() ==
+        List<PotionEffect> harmFulEffect =  player.getActivePotionEffects().stream().filter(effect -> effect.getType().getEffectCategory() ==
                 PotionEffectType.Category.HARMFUL).collect(Collectors.toList());
 
-        if(badEffect == null) {
-            commandSender.sendMessage("1");
+        if(harmFulEffect.isEmpty()) {
+            commandSender.sendMessage(color("&a[>>] Инфо: &fУ вас нет негативных эффектов!"));
             return true;
         }
 
-        badEffect.stream().forEach(effect -> player.removePotionEffect(effect.getType()));
-        commandSender.sendMessage("2");
+        harmFulEffect.stream().forEach(effect -> player.removePotionEffect(effect.getType()));
+        commandSender.sendMessage(color("&a[>>] Инфо: &fВы очистили с себя негативные эффекты."));
 
 
 

@@ -15,7 +15,7 @@ public class God implements CommandExecutor {
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage("0");
+            commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
             return true;
         }
 
@@ -23,12 +23,12 @@ public class God implements CommandExecutor {
 
         if(player.getGameMode() == GameMode.CREATIVE) {
             player.setGameMode(GameMode.SURVIVAL);
-            commandSender.sendMessage("1");
+            commandSender.sendMessage(color("&a[>>] Инфо: &fВы выключили режим бессмертия!"));
             return true;
         }
 
         player.setGameMode(GameMode.CREATIVE);
-        commandSender.sendMessage("2");
+        commandSender.sendMessage(color("&a[>>] Инфо: &fВы включили режим бессмертия!"));
 
         return true;
     }
