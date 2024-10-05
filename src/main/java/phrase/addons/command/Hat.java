@@ -21,14 +21,18 @@ public class Hat implements CommandExecutor {
         }
 
         Player player = (Player) commandSender;
-        ItemStack item = player.getItemInHand();
+        ItemStack item = player.getInventory().getItemInMainHand();
 
         if (item.equals(Material.AIR)) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fУ вас нет предмета в руке!"));
             return true;
         }
 
+        int amountItem = item.getAmount();
+
+        player.getInventory().getItemInMainHand().setAmount(amountItem - 1);
         player.getInventory().setHelmet(item);
+
         commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно надели предмет на голову!"));
 
         return true;

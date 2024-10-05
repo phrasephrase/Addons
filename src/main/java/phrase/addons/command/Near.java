@@ -21,17 +21,16 @@ public class Near implements CommandExecutor {
 
         Player player = (Player) commandSender;
 
-        StringBuilder nearblyPlayers = new StringBuilder(color("&a[>>] Инфо: &fРядом с вами: "));
+        StringBuilder nearblyPlayers = new StringBuilder(color("&a[>>] Инфо: &fРядом с вами: &6"));
 
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(p != player && p.getLocation().distance(player.getLocation()) <= 100) {
                 nearblyPlayers.append(p.getName());
-                nearblyPlayers.append(", ");
-                return true;
+                nearblyPlayers.append(color("&f, &6"));
             }
         }
 
-        if(nearblyPlayers.toString().equals(color("&a[>>] Инфо: &fРядом с вами: "))) {
+        if(nearblyPlayers.toString().equals(color("&a[>>] Инфо: &fРядом с вами: &6"))) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fРядом с вами нет игроков!"));
             return true;
         }

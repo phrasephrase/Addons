@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class Teleport implements CommandExecutor {
 
-    private Map<UUID, UUID> players = new HashMap<>();
+    private static Map<UUID, UUID> players = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
@@ -31,6 +31,7 @@ public class Teleport implements CommandExecutor {
 
             if(strings.length < 1) {
                 commandSender.sendMessage(color("&a[>>] Инфо: &f/tp <name>"));
+                return true;
             }
 
             Player targetPlayer = Bukkit.getPlayer(strings[0]);
@@ -51,6 +52,7 @@ public class Teleport implements CommandExecutor {
 
             if(strings.length < 1) {
                 commandSender.sendMessage(color("&a[>>] Инфо: &f/tpa <name>"));
+                return true;
             }
 
             Player targetPlayer = Bukkit.getPlayer(strings[0]);

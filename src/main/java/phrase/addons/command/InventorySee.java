@@ -34,9 +34,9 @@ public class InventorySee implements CommandExecutor {
             commandSender.sendMessage(color("&a[>>] Инфо: &fИгрок не найден!"));
         }
 
-        player.openInventory(targetPlayer.getInventory());
+        Inventory inv = targetPlayer.getInventory();
+        player.openInventory(inv);
         commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно открыли инвентарь &6" + targetPlayer.getName()));
-
 
         return true;
     }

@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Warp implements CommandExecutor {
 
-    private Map<String, WarpInfo> warps = new HashMap<>();
+    private static Map<String, WarpInfo> warps = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
@@ -41,7 +41,6 @@ public class Warp implements CommandExecutor {
                 commandSender.sendMessage(color("&a[>>] Инфо: &fВы телепортированы на варп &6" + strings[0]));
                 return true;
             } else {
-                System.out.println("Отладка: else");
                 commandSender.sendMessage(color("&a[>>] Инфо: &fВарп &6" + strings[0] + " &fне существует!"));
             }
                 return true;
