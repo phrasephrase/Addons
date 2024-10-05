@@ -1,6 +1,8 @@
 package phrase.addons;
 
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import phrase.addons.command.*;
 
@@ -16,6 +18,7 @@ public final class Addons extends JavaPlugin {
         getCommand("fly").setExecutor(new Fly());
         getCommand("hat").setExecutor(new Hat());
         getCommand("invsee").setExecutor(new InventorySee());
+        Bukkit.getPluginManager().registerEvents(new InventorySee(), this);
         getCommand("god").setExecutor(new God());
         getCommand("tpa").setExecutor(new Teleport());
         getCommand("tpaccept").setExecutor(new Teleport());

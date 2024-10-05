@@ -2,15 +2,27 @@ package phrase.addons.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 
-public class InventorySee implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class InventorySee implements CommandExecutor, Listener {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
@@ -21,7 +33,7 @@ public class InventorySee implements CommandExecutor {
             return true;
         }
 
-        if(strings.length < 0) {
+        if(strings.length < 1) {
             commandSender.sendMessage(color("&a[>>] Инфо: &f/invsee <name>"));
             return true;
         }
@@ -30,15 +42,76 @@ public class InventorySee implements CommandExecutor {
         String name = strings[0];
         Player targetPlayer = Bukkit.getPlayer(name);
 
-        if(targetPlayer.isOnline()) {
+        if(targetPlayer == null) {
             commandSender.sendMessage(color("&a[>>] Инфо: &fИгрок не найден!"));
         }
 
-        Inventory inv = targetPlayer.getInventory();
+
+        Inventory inv = Bukkit.createInventory(null, 54, color("&8Инвентарь игрока " + targetPlayer.getName()));
+
+        for(int i = 0; i<targetPlayer.getInventory().getSize(); i++) {
+            ItemStack item = targetPlayer.getInventory().getItem(i);
+            inv.setItem(i, item);
+        }
+
+        inv.setItem(43, targetPlayer.getInventory().getHelmet());
+        inv.setItem(44, targetPlayer.getInventory().getLeggings());
+        inv.setItem(52, targetPlayer.getInventory().getChestplate());
+        inv.setItem(53, targetPlayer.getInventory().getBoots());
+
+        if(inv.getItem(43) == null) {
+            inv.setItem(43, new ItemStack(Material.CHAINMAIL_HELMET));
+        }
+
+        if(inv.getItem(44) == null) {
+            inv.setItem(44, new ItemStack(Material.CHAINMAIL_LEGGINGS));
+        }
+
+        if(inv.getItem(52) == null) {
+            inv.setItem(52, new ItemStack(Material.CHAINMAIL_CHESTPLATE));
+        }
+
+        if(inv.getItem(53) == null) {
+            inv.setItem(53, new ItemStack(Material.CHAINMAIL_BOOTS));
+        }
+
+        inv.setItem(39, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+        inv.setItem(40, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+        inv.setItem(41, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+        inv.setItem(49, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+
+        inv.setItem(51, targetPlayer.getInventory().getItemInOffHand());
+
+        List<PotionEffect> potionEffectsList = targetPlayer.getActivePotionEffects().stream().collect(Collectors.toList());
+        ItemStack item = new ItemStack(Material.POTION);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(color("&fЭффекты игрока &6" + player.getName()));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+
+        for(PotionEffect potionEffects : potionEffectsList) {
+            String potionEffect = potionEffects.toString();
+            List<String> lorePotionEffects = new ArrayList<>();
+            lorePotionEffects.add(potionEffect);
+            meta.setLore(lorePotionEffects);
+        }
+
+        item.setItemMeta(meta);
+
+        inv.setItem(50, item);
+
         player.openInventory(inv);
         commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно открыли инвентарь &6" + targetPlayer.getName()));
 
         return true;
+    }
+
+    @EventHandler
+    public void click(InventoryClickEvent e) {
+        if(e.getView().getTitle().startsWith(color("&8Инвентарь игрока "))) {
+            e.setCancelled(true);
+        }
     }
 
     public String color(String string) {
