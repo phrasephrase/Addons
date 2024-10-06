@@ -1,0 +1,53 @@
+Message:
+  prefix: "[>>] Инфо: "
+  checking: "Вы не являетесь игроком!"
+  permission: "У вас нет прав!"
+
+  Command:
+    Workbench:
+      open: "Вы успешно открыли виртуальный верстак!"
+    EnderChest:
+      open: "Вы успешно открыли виртуальный сундук!"
+    Ext:
+      noSuccesful: "Вы не горите!"
+      succesful: "Вы были потушены!"
+    Fly:
+      disable: "Вы выключили режим полета!"
+      enable: "Вы включили режим полета!"
+    God:
+      disable: "Вы выключили режим бессмертия!"
+      enable: "Вы включили режим бессмертия!"
+    Hat:
+      item: "У вас нет предмета в руке!"
+      succesful: "Вы успешно одели предмет на голову!"
+    InvSee:
+      usage: "/invsee <name>"
+      player: "Игрок не найден!"
+      open: "Вы успешно открыли инвентарь игрока {player}"
+    Milk:
+      noSuccesful: "У вас нет негативных эффектов!"
+      succesful: "Вы успешно очистили с себя негативные эффекты!"
+    Near:
+      find: "Рядом с вами нет игроков!"
+    Teleport:
+      tpUsage: "/tp <name>"
+      tpaUsage: "/tpa <name>"
+      tpaRequestPlayer: "Вы отправили запрос на телепортацию {player}"
+      tpaRequestTargetPlayer: "{player} отправил вам запрос на телепортацию. Введите /yes чтобы принять, /no чтобы отклонить."
+      succesful: "Вы телепортировались к {player}"
+      player: "Игрок не найден!"
+      acceptTargetPlayer: "Вы приняли запрос запрос на телепортацию!"
+      acceptPlayer: "Запрос на телепортацию был принят!"
+      denyTargetPlayer: "Вы отклонили запрос на телепортацию!"
+      denyPlayer: "Запрос на телепортацию был отклонен!"
+      request: "Вам никто не отправлял запрос на телепортацию!"
+    Warp:
+      warpUsage: "/warp <name>"
+      setWarpUsage: "/setwarp <name>"
+      delWarpUsage: "/delwarp <name>"
+      tp: "Вы успешно телепортировались на варп {name}"
+      find: "Варп {name} не найден!"
+      create: "Вы успешно создали варп {name}"
+      exists: "Варп {name} уже существует!"
+      delete: "Вы успешно удалили варп {name}"
+      creator: "Вы не владелец варпа!"

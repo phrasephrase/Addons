@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.Addons;
 
 public class Workbench implements CommandExecutor {
 
@@ -17,15 +18,20 @@ public class Workbench implements CommandExecutor {
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
-        Inventory inv = Bukkit.createInventory(player, InventoryType.WORKBENCH);
+        if(!player.hasPermission("addons.workbench")) {
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission")));
+            return true;
+        }
+
+        Inventory inv = Bukkit.createInventory(player, InventoryType.WORKBENCH, color("&8Создание"));
         player.openInventory(inv);
-        commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно открыли виртуальный верстак!"));
+        commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.workbench.open")));
 
         return true;
     }

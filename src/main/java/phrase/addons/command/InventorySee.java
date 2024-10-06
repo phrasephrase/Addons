@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.Addons;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,21 +30,27 @@ public class InventorySee implements CommandExecutor, Listener {
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
-            return true;
-        }
-
-        if(strings.length < 1) {
-            commandSender.sendMessage(color("&a[>>] Инфо: &f/invsee <name>"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
+
+        if(!player.hasPermission("addons.invsee")) {
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission")));
+            return true;
+        }
+
+        if(strings.length < 1) {
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.invsee.usage")));
+            return true;
+        }
+
         String name = strings[0];
         Player targetPlayer = Bukkit.getPlayer(name);
 
         if(targetPlayer == null) {
-            commandSender.sendMessage(color("&a[>>] Инфо: &fИгрок не найден!"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.invsee.player")));
         }
 
 
@@ -102,8 +109,9 @@ public class InventorySee implements CommandExecutor, Listener {
         inv.setItem(50, item);
 
         player.openInventory(inv);
-        commandSender.sendMessage(color("&a[>>] Инфо: &fВы успешно открыли инвентарь &6" + targetPlayer.getName()));
-
+        String openInventory = (color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.invsee.open")));
+        openInventory = openInventory.replace("{player}", targetPlayer.getName());
+        player.sendMessage(openInventory);
         return true;
     }
 

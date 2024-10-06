@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.Addons;
 
 public class Fly implements CommandExecutor {
 
@@ -14,19 +15,24 @@ public class Fly implements CommandExecutor {
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
+        if(!player.hasPermission("addons.fly")) {
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission")));
+            return true;
+        }
+
         if(player.getAllowFlight()) {
             player.setAllowFlight(false);
-            commandSender.sendMessage(color("&a[>>] Инфо: &fВы выключили режим полета!"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.fly.disable")));
             return true;
         } else {
             player.setAllowFlight(true);
-            commandSender.sendMessage(color("&a[>>] Инфо: &fВы включили режим полета!"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.fly.enable")));
 
         }
 

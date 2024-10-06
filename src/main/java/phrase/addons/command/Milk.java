@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.Addons;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,11 @@ public class Milk implements CommandExecutor {
         }
 
         Player player = (Player) commandSender;
+
+        if(!player.hasPermission("addons.milk")) {
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission")));
+            return true;
+        }
 
         List<PotionEffect> harmFulEffect =  player.getActivePotionEffects().stream().filter(effect -> effect.getType().getEffectCategory() ==
                 PotionEffectType.Category.HARMFUL).collect(Collectors.toList());

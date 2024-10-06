@@ -8,9 +8,10 @@ commands:
   hat: {}
   invsee: {}
   setwarp: {}
-  warp: {}
+  warp: { }
   delwarp: {}
   ext: {}
+  tp: {}
   tpa: {}
   tpaccept: {}
   tpdeny: {}
@@ -18,6 +19,7 @@ commands:
   god: {}
   milk: {}
   near: {}
+  endersee: {}
 
 
 

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.Addons;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,31 +28,43 @@ public class Teleport implements CommandExecutor {
 
         Player player = (Player) commandSender;
 
-        if(s.equalsIgnoreCase("tp")) {
+        if(player.hasPermission("addons.tp")) {
+            if(s.equalsIgnoreCase("tp")) {
 
-            if(strings.length < 1) {
-                commandSender.sendMessage(color("&a[>>] Инфо: &f/tp <name>"));
+                if(strings.length < 1) {
+                    commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.tpUsage")));
+                    return true;
+                }
+
+                Player targetPlayer = Bukkit.getPlayer(strings[0]);
+
+                if(targetPlayer != null) {
+
+                    player.teleport(targetPlayer.getLocation());
+                    String tp = Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission");
+                    tp = tp.replace("{player}", targetPlayer.getName());
+                    commandSender.sendMessage(tp);
+                    return true;
+                } else {
+                    commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.player")));
+                }
+
                 return true;
             }
-
-            Player targetPlayer = Bukkit.getPlayer(strings[0]);
-
-            if(targetPlayer != null) {
-
-                player.teleport(targetPlayer.getLocation());
-                commandSender.sendMessage(color("&a[>>] Инфо: &fВы телепортировались к &6" + targetPlayer.getName()));
-                return true;
-            } else {
-                commandSender.sendMessage(color("&a[>>] Инфо: &fИгрок не найден!"));
-            }
-
+        } else {
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission")));
             return true;
         }
+
+      if(!player.hasPermission("addons.tpa")) {
+          commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission")));
+          return true;
+      }
 
         if(s.equalsIgnoreCase("tpa")) {
 
             if(strings.length < 1) {
-                commandSender.sendMessage(color("&a[>>] Инфо: &f/tpa <name>"));
+                commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.tpaUsage")));
                 return true;
             }
 
@@ -60,12 +73,15 @@ public class Teleport implements CommandExecutor {
             if(targetPlayer != null) {
 
                 players.put(targetPlayer.getUniqueId(), player.getUniqueId());
-                commandSender.sendMessage(color("&a[>>] Инфо: &fВы отправили запрос на телепортацию к &6" + targetPlayer.getName()));
-                targetPlayer.sendMessage(color("&a[>>] Инфо: &6" + player.getName() + " &fотправил запрос на телепортацию к вам!"));
-                targetPlayer.sendMessage(color("&a[>>] Инфо: &fВведите &6/tpaccept &fчтобы принять или &6/tpdeny &fчтобы отклонить."));
+                String tpaPlayer = Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.tpaRequestPlayer");
+                tpaPlayer = tpaPlayer.replace("{player}", targetPlayer.getName());
+                String tpaTargetPlayer = Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.tpaRequestTargetPlayer");
+                tpaTargetPlayer = tpaTargetPlayer.replace("{player}", player.getName());
+                commandSender.sendMessage(tpaPlayer);
+                targetPlayer.sendMessage(tpaTargetPlayer);
                 return true;
             } else {
-                commandSender.sendMessage(color("&a[>>] Инфо: &fИгрок не найден!"));
+                commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.player")));
             }
 
             return true;
@@ -79,11 +95,11 @@ public class Teleport implements CommandExecutor {
             if(targetPlayer != null) {
 
                 targetPlayer.teleport(player);
-                commandSender.sendMessage(color("&a[>>] Инфо: &fВы приняли запрос на телепортацию!"));
-                targetPlayer.sendMessage(color("&a[>>] Инфо: &fИгрок принял ваш запрос на телепортацию!"));
+                commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.acceptTargetPlayer")));
+                targetPlayer.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.acceptPlayer")));
                 return true;
             } else {
-                commandSender.sendMessage(color("&a[>>] Инфо: &fВам никто не отправлял запрос на телепортацию!"));
+                commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.request")));
             }
 
             return true;
@@ -96,11 +112,11 @@ public class Teleport implements CommandExecutor {
 
             if(targetPlayer != null) {
 
-                commandSender.sendMessage(color("&a[>>] Инфо: &fВы отклонили запрос на телепортацию!"));
-                targetPlayer.sendMessage(color("&a[>>] Инфо: &fИгрок отклонил ваш запрос на телепортацию!"));
+                commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.denyTargetPlayer")));
+                targetPlayer.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.denyPlayer")));
                 return true;
             } else {
-                commandSender.sendMessage(color("&a[>>] Инфо: &fВам никто не отправлял запрос на телепортацию!"));
+                commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.request")));
             }
 
             return true;
