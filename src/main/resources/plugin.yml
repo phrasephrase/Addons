@@ -8,7 +8,7 @@ commands:
   hat: {}
   invsee: {}
   setwarp: {}
-  warp: { }
+  warp: {}
   delwarp: {}
   ext: {}
   tp: {}
@@ -20,6 +20,11 @@ commands:
   milk: {}
   near: {}
   endersee: {}
+  feed: {}
+  home: {}
+  sethome: {}
+  delhome: {}
+  reload: {}
 
 
 

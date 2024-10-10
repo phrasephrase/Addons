@@ -34,7 +34,7 @@ public class EnderSee implements CommandExecutor, Listener {
 
         Player targetPlayer = Bukkit.getPlayer(strings[0]);
 
-        Inventory inv = Bukkit.createInventory(null, InventoryType.ENDER_CHEST, color("&8Эндер сундук игрока " + targetPlayer.getName()));
+        Inventory inv = Bukkit.createInventory(null, InventoryType.ENDER_CHEST, color("&8Эндер-сундук игрока " + targetPlayer.getName()));
 
         for(int i = 0; i<targetPlayer.getEnderChest().getSize(); i++) {
             ItemStack item = targetPlayer.getEnderChest().getItem(i);

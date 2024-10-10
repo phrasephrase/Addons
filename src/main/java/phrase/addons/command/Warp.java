@@ -9,7 +9,11 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import phrase.addons.Addons;
 import phrase.addons.WarpInfo;
+import phrase.addons.sql.DatabaseManager;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +43,8 @@ public class Warp implements CommandExecutor {
 
                 if(warps.containsKey(strings[0])) {
                     WarpInfo warp = warps.get(strings[0]);
-                    player.teleport(warp.getLocation());
+                    Location locationWarp = new Location(warp.getWorld(), warp.getX(), warp.getY(), warp.getZ(), (float) warp.getYaw(), (float) warp.getPitch());
+                    player.teleport(locationWarp);
                     String tp = color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.warp.tp"));
                     tp = tp.replace("{name}", strings[0]);
                     commandSender.sendMessage(tp);
@@ -73,9 +78,29 @@ public class Warp implements CommandExecutor {
                 commandSender.sendMessage(exists);
                 return true;
             } else {
-                warps.put(strings[0], new WarpInfo(player.getUniqueId(), player.getLocation()));
+                WarpInfo warp = new WarpInfo(player.getUniqueId(), player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ() , player.getLocation().getYaw(), player.getLocation().getPitch());
+                warps.put(strings[0], warp);
+
                 String create = color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.warp.create"));
                 create = create.replace("{name}", strings[0]);
+                player.sendMessage(create);
+
+                String query = "INSERT INTO Warps VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+                try(Connection connection = DatabaseManager.getServerConnection(Addons.getUrl(), Addons.getUsername(), Addons.getPassword())) {
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    preparedStatement.setString(1, strings[0]);
+                    preparedStatement.setDouble(2, player.getLocation().getBlockX());
+                    preparedStatement.setDouble(3, player.getLocation().getBlockY());
+                    preparedStatement.setDouble(4, player.getLocation().getBlockZ());
+                    preparedStatement.setDouble(5, player.getLocation().getYaw());
+                    preparedStatement.setDouble(6, player.getLocation().getPitch());
+                    preparedStatement.setString(7, player.getWorld().getName());
+                    preparedStatement.setString(8, player.getName());
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    Addons.getInstance().getLogger().info("Ошибка: " + e);
+                }
             }
             return true;
         }
@@ -94,6 +119,16 @@ public class Warp implements CommandExecutor {
                     String delete = color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.warp.delete"));
                     delete = delete.replace("{name}", strings[0]);
                     commandSender.sendMessage(delete);
+
+                    String query = "DELETE FROM WARPS WHERE name=?";
+
+                    try(Connection connection = DatabaseManager.getServerConnection(Addons.getUrl(), Addons.getUsername(), Addons.getPassword())) {
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1 , strings[0]);
+                        preparedStatement.executeUpdate();
+                    } catch(SQLException e) {
+                        Addons.getInstance().getLogger().info("Ошибка: " + e);
+                    }
                 } else {
                     commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.warp.creator")));
                 }
@@ -111,5 +146,9 @@ public class Warp implements CommandExecutor {
 
     public String color(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    public static Map<String, WarpInfo> getWarps() {
+        return warps;
     }
 }

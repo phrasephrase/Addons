@@ -44,10 +44,7 @@ public class God implements CommandExecutor, Listener {
 
     @EventHandler
     public void click(InventoryClickEvent e) {
-        if(e.getWhoClicked().getOpenInventory().equals(e.getWhoClicked().getInventory())) {
-            e.setCancelled(true);
-        }
-
+        e.setCancelled(true);
     }
 
     public String color(String string) {

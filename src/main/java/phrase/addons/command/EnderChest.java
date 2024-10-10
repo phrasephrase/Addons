@@ -33,13 +33,14 @@ public class EnderChest implements CommandExecutor, Listener {
             return true;
         }
 
-        Inventory inv = Bukkit.createInventory(player, InventoryType.ENDER_CHEST, color("&8Эндер сундук"));
+        Inventory inv = Bukkit.createInventory(player, InventoryType.ENDER_CHEST, color("&8Эндер-сундук"));
 
         for(int i = 0; i<player.getEnderChest().getSize(); i++) {
             ItemStack item = player.getEnderChest().getItem(i);
             inv.setItem(i, item);
         }
 
+        player.openInventory(inv);
 
         commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.enderchest.open")));
 
@@ -48,7 +49,7 @@ public class EnderChest implements CommandExecutor, Listener {
 
     @EventHandler
     public void close(InventoryCloseEvent e) {
-        if(e.getView().getTitle().equals(color("&8Эндер сундук"))) {
+        if(e.getView().getTitle().equals(color("&8Эндер-сундук"))) {
             e.getPlayer().getEnderChest().clear();
             for(int i = 0; i<e.getInventory().getSize(); i++) {
                 ItemStack item = e.getInventory().getItem(i);

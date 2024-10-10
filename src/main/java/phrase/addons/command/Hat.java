@@ -29,7 +29,7 @@ public class Hat implements CommandExecutor {
 
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (item == null) {
+        if (item.getType() == Material.AIR) {
             commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.hat.item")));
             return true;
         }
@@ -39,9 +39,8 @@ public class Hat implements CommandExecutor {
             player.getInventory().setHelmet(new ItemStack(Material.AIR));
         }
 
-        int amountItem = item.getAmount();
-        player.getInventory().getItemInMainHand().setAmount(amountItem - 1);
         player.getInventory().setHelmet(item);
+        player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 
         commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.hat.succesful")));
 
