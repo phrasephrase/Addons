@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import phrase.addons.Addons;
 import phrase.addons.HomeInfo;
@@ -71,22 +72,28 @@ public class Home implements CommandExecutor {
             String create = color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.home.create"));
             create = create.replace("{name}", strings[0]);
             commandSender.sendMessage(create);
-            String query = "INSERT INTO homes VALUES(?,?,?,?,?,?,?,?)";
 
-            try(Connection connection = DatabaseManager.getServerConnection(Addons.getUrl(), Addons.getUsername(), Addons.getPassword())) {
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, strings[0]);
-                preparedStatement.setDouble(2, player.getLocation().getBlockX());
-                preparedStatement.setDouble(3, player.getLocation().getBlockY());
-                preparedStatement.setDouble(4, player.getLocation().getBlockZ());
-                preparedStatement.setDouble(5, player.getLocation().getYaw());
-                preparedStatement.setDouble(6, player.getLocation().getPitch());
-                preparedStatement.setString(7, player.getWorld().getName());
-                preparedStatement.setString(8, player.getName());
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                Addons.getInstance().getLogger().info("Ошибка " + e);
-            }
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    String query = "INSERT INTO homes VALUES(?,?,?,?,?,?,?,?)";
+
+                    try(Connection connection = DatabaseManager.getServerConnection()) {
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, strings[0]);
+                        preparedStatement.setDouble(2, player.getLocation().getBlockX());
+                        preparedStatement.setDouble(3, player.getLocation().getBlockY());
+                        preparedStatement.setDouble(4, player.getLocation().getBlockZ());
+                        preparedStatement.setDouble(5, player.getLocation().getYaw());
+                        preparedStatement.setDouble(6, player.getLocation().getPitch());
+                        preparedStatement.setString(7, player.getWorld().getName());
+                        preparedStatement.setString(8, player.getName());
+                        preparedStatement.executeUpdate();
+                    } catch (SQLException e) {
+                        Addons.getInstance().getLogger().info("Ошибка " + e);
+                    }
+                }
+            }.runTaskAsynchronously(Addons.getInstance());
             return true;
         }
 
@@ -107,17 +114,21 @@ public class Home implements CommandExecutor {
             String delete = color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.home.delete"));
             delete = delete.replace("{name}", strings[0]);
             commandSender.sendMessage(delete);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    String query = "DELETE FROM homes WHERE name=? AND owner=?";
 
-            String query = "DELETE FROM homes WHERE name=? AND owner=?";
-
-            try(Connection connection = DatabaseManager.getServerConnection(Addons.getUrl(), Addons.getUsername(), Addons.getPassword())) {
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, strings[0]);
-                preparedStatement.setString(2, player.getName());
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                Addons.getInstance().getLogger().info("Ошибка " + e);
-            }
+                    try(Connection connection = DatabaseManager.getServerConnection()) {
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, strings[0]);
+                        preparedStatement.setString(2, player.getName());
+                        preparedStatement.executeUpdate();
+                    } catch (SQLException e) {
+                        Addons.getInstance().getLogger().info("Ошибка " + e);
+                    }
+                }
+            }.runTaskAsynchronously(Addons.getInstance());
 
             return true;
         }

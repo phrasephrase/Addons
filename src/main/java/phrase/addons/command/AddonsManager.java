@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import phrase.addons.Addons;
 
-public class Reload implements CommandExecutor {
+public class AddonsManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
@@ -20,13 +20,16 @@ public class Reload implements CommandExecutor {
 
         Player player = (Player) commandSender;
 
-        if(!player.hasPermission("addons.reload")) {
+        if(!player.hasPermission("addons.manager")) {
             commandSender.sendMessage(color(phrase.addons.Addons.getInstance().getConfig().getString("message.prefix") + phrase.addons.Addons.getInstance().getConfig().getString("message.permission")));
             return true;
         }
 
-        Addons.getInstance().reloadConfig();
-        commandSender.sendMessage(color(phrase.addons.Addons.getInstance().getConfig().getString("message.prefix") + phrase.addons.Addons.getInstance().getConfig().getString("message.command.reload.succesful")));
+        if(strings[0].equalsIgnoreCase("reload")) {
+            Addons.getInstance().reloadConfig();
+            commandSender.sendMessage(color(phrase.addons.Addons.getInstance().getConfig().getString("message.prefix") + phrase.addons.Addons.getInstance().getConfig().getString("message.command.reload.succesful")));
+            return true;
+        }
 
         return true;
     }

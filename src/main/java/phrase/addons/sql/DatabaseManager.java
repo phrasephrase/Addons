@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    private static Connection connection;
-
     public static void registerDriver() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -19,9 +17,8 @@ public class DatabaseManager {
         }
     }
 
-    public static Connection getServerConnection(String url, String username, String password) throws SQLException {
-        connection = DriverManager.getConnection(url, username, password);
-        return connection;
+    public static Connection getServerConnection() throws SQLException {
+       return DriverManager.getConnection(Addons.URL, Addons.USERNAME, Addons.PASSWORD);
     }
 }
 

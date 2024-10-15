@@ -2,7 +2,6 @@ package phrase.addons;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 import phrase.addons.command.*;
@@ -15,9 +14,9 @@ import java.util.UUID;
 public final class Addons extends JavaPlugin {
 
     private static Addons instance;
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "0";
+    public static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+    public static final String USERNAME = "postgres";
+    public static final String PASSWORD = "0";
 
     @Override
     public void onEnable() {
@@ -36,8 +35,6 @@ public final class Addons extends JavaPlugin {
         getCommand("hat").setExecutor(new Hat());
         getCommand("invsee").setExecutor(new InventorySee());
         Bukkit.getPluginManager().registerEvents(new InventorySee(), this);
-        getCommand("god").setExecutor(new God());
-        Bukkit.getPluginManager().registerEvents(new God(), this);
         getCommand("tp").setExecutor(new Teleport());
         getCommand("tpa").setExecutor(new Teleport());
         getCommand("tpaccept").setExecutor(new Teleport());
@@ -56,7 +53,7 @@ public final class Addons extends JavaPlugin {
         getCommand("sethome").setExecutor(new Home());
         getCommand("delhome").setExecutor(new Home());
         getCommand("repair").setExecutor(new Repair());
-        getCommand("reload").setExecutor(new Reload());
+        getCommand("addons").setExecutor(new AddonsManager());
         getLogger().info("Плагин Addons успешно загружен!");
     }
 
@@ -66,7 +63,7 @@ public final class Addons extends JavaPlugin {
     }
 
     public void getDataWarps() {
-        try(Connection connection = DatabaseManager.getServerConnection(getUrl(), getUsername(), getPassword())) {
+        try(Connection connection = DatabaseManager.getServerConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Warps");
             while(resultSet.next()) {
@@ -88,7 +85,7 @@ public final class Addons extends JavaPlugin {
     }
 
     public void getDataHomes() {
-        try(Connection connection = DatabaseManager.getServerConnection(getUrl(), getUsername(), getPassword())) {
+        try(Connection connection = DatabaseManager.getServerConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Homes");
             while(resultSet.next()) {
@@ -111,18 +108,6 @@ public final class Addons extends JavaPlugin {
 
     public static Addons getInstance() {
         return instance;
-    }
-
-    public static String getUrl() {
-        return URL;
-    }
-
-    public static String getUsername() {
-        return USERNAME;
-    }
-
-    public static String getPassword() {
-        return PASSWORD;
     }
 
 }

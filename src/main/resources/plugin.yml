@@ -16,7 +16,6 @@ commands:
   tpaccept: {}
   tpdeny: {}
   fly: {}
-  god: {}
   milk: {}
   near: {}
   endersee: {}
@@ -24,7 +23,8 @@ commands:
   home: {}
   sethome: {}
   delhome: {}
-  reload: {}
+  repair: {}
+  addons: {}
 
 
 

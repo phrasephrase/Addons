@@ -38,10 +38,15 @@ public class Teleport implements CommandExecutor {
 
                 Player targetPlayer = Bukkit.getPlayer(strings[0]);
 
+                if(targetPlayer.getUniqueId().equals(player.getUniqueId())) {
+                    commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.noTp")));
+                    return true;
+                }
+
                 if(targetPlayer != null) {
 
                     player.teleport(targetPlayer.getLocation());
-                    String tp = Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission");
+                    String tp = Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.teleport.succesful");
                     tp = tp.replace("{player}", targetPlayer.getName());
                     commandSender.sendMessage(tp);
                     return true;

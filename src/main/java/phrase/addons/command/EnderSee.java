@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import phrase.addons.Addons;
 
 public class EnderSee implements CommandExecutor, Listener {
 
@@ -21,14 +22,14 @@ public class EnderSee implements CommandExecutor, Listener {
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(color("&a[>>] Инфо: &fВы не являетесь игроком!"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
         if(strings.length < 1) {
-            commandSender.sendMessage(color("&a[>>] Инфо: &f/endersee <name>"));
+            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.endersee.enderSeeUsage")));
             return true;
         }
 
@@ -42,6 +43,9 @@ public class EnderSee implements CommandExecutor, Listener {
         }
 
         player.openInventory(inv);
+        String open = color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.endersee.open"));
+        open.replace("{name}", targetPlayer.getName());
+        commandSender.sendMessage(open);
 
         return true;
     }
