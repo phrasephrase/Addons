@@ -1,6 +1,6 @@
 name: Addons
 version: '1.0-SNAPSHOT'
-main: phrase.addons.Addons
+main: phrase.addons.Plugin
 api-version: '1.18'
 commands:
   workbench: {}

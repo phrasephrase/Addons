@@ -1,4 +1,4 @@
-package phrase.addons.command;
+package phrase.addons.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,29 +8,31 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import phrase.addons.Addons;
+import phrase.addons.Plugin;
+import phrase.addons.utils.UtilHexColor;
 
 public class Hat implements CommandExecutor {
+    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.checking")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
         if(!player.hasPermission("addons.hat")) {
-            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.permission")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.permission")));
             return true;
         }
 
         ItemStack item = player.getInventory().getItemInMainHand();
 
         if (item.getType() == Material.AIR) {
-            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.hat.item")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.hat.item")));
             return true;
         }
 
@@ -42,7 +44,7 @@ public class Hat implements CommandExecutor {
         player.getInventory().setHelmet(item);
         player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 
-        commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.hat.succesful")));
+        commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.hat.succesful")));
 
         return true;
     }

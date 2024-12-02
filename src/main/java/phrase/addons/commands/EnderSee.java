@@ -1,4 +1,4 @@
-package phrase.addons.command;
+package phrase.addons.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,23 +13,26 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import phrase.addons.Addons;
+import phrase.addons.Plugin;
+import phrase.addons.utils.UtilHexColor;
 
 public class EnderSee implements CommandExecutor, Listener {
+
+    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.checking")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
         if(strings.length < 1) {
-            commandSender.sendMessage(color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.endersee.enderSeeUsage")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.endersee.enderSeeUsage")));
             return true;
         }
 
@@ -43,7 +46,7 @@ public class EnderSee implements CommandExecutor, Listener {
         }
 
         player.openInventory(inv);
-        String open = color(Addons.getInstance().getConfig().getString("message.prefix") + Addons.getInstance().getConfig().getString("message.command.endersee.open"));
+        String open = UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.endersee.open"));
         open.replace("{name}", targetPlayer.getName());
         commandSender.sendMessage(open);
 

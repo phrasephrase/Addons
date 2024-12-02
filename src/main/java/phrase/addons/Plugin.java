@@ -1,19 +1,14 @@
 package phrase.addons;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
-import phrase.addons.command.*;
+import phrase.addons.commands.*;
 import phrase.addons.sql.DatabaseManager;
 
-import java.sql.*;
-import java.util.UUID;
 
+public final class Plugin extends JavaPlugin {
 
-public final class Addons extends JavaPlugin {
-
-    private static Addons instance;
+    private static Plugin instance;
     public static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     public static final String USERNAME = "postgres";
     public static final String PASSWORD = "0";
@@ -25,9 +20,6 @@ public final class Addons extends JavaPlugin {
         saveDefaultConfig();
 
         DatabaseManager.registerDriver();
-
-        getDataWarps();
-        getDataHomes();
 
         getCommand("workbench").setExecutor(new Workbench());
         getCommand("ext").setExecutor(new Ext());
@@ -62,6 +54,7 @@ public final class Addons extends JavaPlugin {
         saveConfig();
     }
 
+    /*
     public void getDataWarps() {
         try(Connection connection = DatabaseManager.getServerConnection()) {
             Statement statement = connection.createStatement();
@@ -106,7 +99,9 @@ public final class Addons extends JavaPlugin {
         }
     }
 
-    public static Addons getInstance() {
+     */
+
+    public static Plugin getInstance() {
         return instance;
     }
 

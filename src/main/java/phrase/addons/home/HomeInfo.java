@@ -1,11 +1,10 @@
-package phrase.addons;
+package phrase.addons.home;
 
-import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.UUID;
 
-public class WarpInfo {
+public class HomeInfo {
 
     private UUID owner;
     private World world;
@@ -15,7 +14,7 @@ public class WarpInfo {
     private float yaw;
     private float pitch;
 
-    public WarpInfo(UUID owner, World world, double x, double y, double z, float yaw, float pitch) {
+    public HomeInfo(UUID owner, World world, double x, double y, double z, float yaw, float pitch) {
         this.owner = owner;
         this.world = world;
         this.x = x;
@@ -45,11 +44,11 @@ public class WarpInfo {
         return z;
     }
 
-    public double getYaw() {
+    public float getYaw() {
         return yaw;
     }
 
-    public double getPitch() {
+    public float getPitch() {
         return pitch;
     }
 }
