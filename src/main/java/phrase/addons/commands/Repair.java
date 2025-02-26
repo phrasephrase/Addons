@@ -12,31 +12,31 @@ import phrase.addons.utils.UtilHexColor;
 
 public class Repair implements CommandExecutor {
 
-    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
+    private static String hex = Plugin.instance.getConfig().getString("hexColor");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender,
                              @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.checking")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
         if(!player.hasPermission("addons.repair")) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.permission")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.permission")));
             return true;
         }
 
         if(player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.repair.item")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.repair.item")));
             return true;
         }
 
         player.getInventory().getItemInMainHand().setDurability((short) 0);
-        commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix") + Plugin.getInstance().getConfig().getString("message.command.repair.succesful")));
+        commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix") + Plugin.instance.getConfig().getString("message.command.repair.succesful")));
 
         return true;
     }

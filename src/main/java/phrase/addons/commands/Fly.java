@@ -11,31 +11,31 @@ import phrase.addons.utils.UtilHexColor;
 
 public class Fly implements CommandExecutor {
 
-    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
+    private static String hex = Plugin.instance.getConfig().getString("hexColor");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex , Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.checking")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex , Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
         if(!player.hasPermission("addons.fly")) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.permission")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.permission")));
             return true;
         }
 
         if(player.getAllowFlight()) {
             player.setAllowFlight(false);
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.fly.disable")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.fly.disable")));
             return true;
         } else {
             player.setAllowFlight(true);
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.fly.enable")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.fly.enable")));
 
         }
 

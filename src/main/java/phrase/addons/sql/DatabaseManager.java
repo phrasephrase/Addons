@@ -11,9 +11,9 @@ public class DatabaseManager {
     public static void registerDriver() {
         try {
             Class.forName("org.postgresql.Driver");
-            Plugin.getInstance().getLogger().info("Драйвер JDBC зарегистрирован");
+            Plugin.instance.getLogger().info("Драйвер JDBC зарегистрирован");
         } catch (ClassNotFoundException e) {
-            Plugin.getInstance().getLogger().info("Не удалось зарегистрировать драйвер JDBC " + e);
+            Plugin.instance.getLogger().info("Не удалось зарегистрировать драйвер JDBC " + e);
         }
     }
 

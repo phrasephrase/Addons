@@ -12,7 +12,7 @@ public class UtilHexColor {
 
         ChatColor chatColor = ChatColor.of(hex);
         ChatColor bold = ChatColor.BOLD;
-        if(Plugin.getInstance().getConfig().getBoolean("bold")) {
+        if(Plugin.instance.getConfig().getBoolean("bold")) {
             return chatColor + (bold + text);
         }
 

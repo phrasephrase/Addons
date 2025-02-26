@@ -17,14 +17,14 @@ import java.util.UUID;
 public class Teleport implements CommandExecutor {
 
     private static Map<UUID, UUID> players = new HashMap<>();
-    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
+    private static String hex = Plugin.instance.getConfig().getString("hexColor");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.checking")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.checking")));
             return true;
         }
 
@@ -34,44 +34,44 @@ public class Teleport implements CommandExecutor {
             if(s.equalsIgnoreCase("tp")) {
 
                 if(strings.length < 1) {
-                    commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.tpUsage")));
+                    commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.tpUsage")));
                     return true;
                 }
 
                 Player targetPlayer = Bukkit.getPlayer(strings[0]);
 
                 if(targetPlayer.getUniqueId().equals(player.getUniqueId())) {
-                    commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color( Plugin.getInstance().getConfig().getString("message.command.teleport.noTp")));
+                    commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color( Plugin.instance.getConfig().getString("message.command.teleport.noTp")));
                     return true;
                 }
 
                 if(targetPlayer != null) {
 
                     player.teleport(targetPlayer.getLocation());
-                    String tp = UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.succesful"));
+                    String tp = UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.succesful"));
                     tp = tp.replace("{player}", targetPlayer.getName());
                     commandSender.sendMessage(tp);
                     return true;
                 } else {
-                    commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.player")));
+                    commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.player")));
                 }
 
                 return true;
             }
         } else {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.permission")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.permission")));
             return true;
         }
 
       if(!player.hasPermission("addons.tpa")) {
-          commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.permission")));
+          commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.permission")));
           return true;
       }
 
         if(s.equalsIgnoreCase("tpa")) {
 
             if(strings.length < 1) {
-                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.tpaUsage")));
+                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.tpaUsage")));
                 return true;
             }
 
@@ -80,15 +80,15 @@ public class Teleport implements CommandExecutor {
             if(targetPlayer != null) {
 
                 players.put(targetPlayer.getUniqueId(), player.getUniqueId());
-                String tpaPlayer = UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.tpaRequestPlayer"));
+                String tpaPlayer = UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.tpaRequestPlayer"));
                 tpaPlayer = tpaPlayer.replace("{player}", targetPlayer.getName());
-                String tpaTargetPlayer = UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.tpaRequestTargetPlayer"));
+                String tpaTargetPlayer = UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.tpaRequestTargetPlayer"));
                 tpaTargetPlayer = tpaTargetPlayer.replace("{player}", player.getName());
                 commandSender.sendMessage(tpaPlayer);
                 targetPlayer.sendMessage(tpaTargetPlayer);
                 return true;
             } else {
-                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.player")));
+                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.player")));
             }
 
             return true;
@@ -102,11 +102,11 @@ public class Teleport implements CommandExecutor {
             if(targetPlayer != null) {
 
                 targetPlayer.teleport(player);
-                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.acceptTargetPlayer")));
-                targetPlayer.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.acceptPlayer")));
+                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.acceptTargetPlayer")));
+                targetPlayer.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.acceptPlayer")));
                 return true;
             } else {
-                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.request")));
+                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.request")));
             }
 
             return true;
@@ -119,11 +119,11 @@ public class Teleport implements CommandExecutor {
 
             if(targetPlayer != null) {
 
-                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.denyTargetPlayer")));
-                targetPlayer.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.denyPlayer")));
+                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.denyTargetPlayer")));
+                targetPlayer.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.denyPlayer")));
                 return true;
             } else {
-                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.teleport.request")));
+                commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.teleport.request")));
             }
 
             return true;

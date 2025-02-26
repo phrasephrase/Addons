@@ -11,14 +11,14 @@ import phrase.addons.utils.UtilHexColor;
 
 public class Feed implements CommandExecutor {
 
-    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
+    private static String hex = Plugin.instance.getConfig().getString("hexColor");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender,
                              @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            String message = UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.checking"));
+            String message = UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.checking"));
             commandSender.sendMessage(message);
             return true;
         }
@@ -26,14 +26,14 @@ public class Feed implements CommandExecutor {
         Player player = (Player) commandSender;
 
         if(!player.hasPermission("addons.feed")) {
-            String message = UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.permission"));
+            String message = UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.permission"));
             commandSender.sendMessage(message);
             return true;
         }
 
         player.setFoodLevel(20);
         player.setSaturation(20);
-        String message = UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.feed.succesful"));
+        String message = UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.feed.succesful"));
 
         commandSender.sendMessage(message);
 

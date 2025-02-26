@@ -16,33 +16,33 @@ import java.util.stream.Collectors;
 
 public class Milk implements CommandExecutor {
 
-    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
+    private static String hex = Plugin.instance.getConfig().getString("hexColor");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex , Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.checking")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex , Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
         if(!player.hasPermission("addons.milk")) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.permission")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.permission")));
             return true;
         }
 
         List<PotionEffect> harmFulEffect =  player.getActivePotionEffects().stream().filter(effect -> effect.getType().getEffectCategory() == PotionEffectType.Category.HARMFUL).collect(Collectors.toList());
 
         if(harmFulEffect.isEmpty()) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.milk.noSuccesful")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.milk.noSuccesful")));
             return true;
         }
 
         harmFulEffect.stream().forEach(effect -> player.removePotionEffect(effect.getType()));
-        commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.milk.succesful")));
+        commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.milk.succesful")));
 
 
 

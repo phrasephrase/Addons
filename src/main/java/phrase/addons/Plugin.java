@@ -1,17 +1,27 @@
 package phrase.addons;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 import phrase.addons.commands.*;
+import phrase.addons.home.HomeInfo;
 import phrase.addons.sql.DatabaseManager;
+import phrase.addons.warp.WarpInfo;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.UUID;
 
 
 public final class Plugin extends JavaPlugin {
 
-    private static Plugin instance;
-    public static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    public static final String USERNAME = "postgres";
-    public static final String PASSWORD = "0";
+    public static Plugin instance;
+    public static final String URL = instance.getConfig().getString("database.url");
+    public static final String USERNAME = instance.getConfig().getString("database.username");;
+    public static final String PASSWORD = instance.getConfig().getString("database.password");;
 
     @Override
     public void onEnable() {
@@ -54,7 +64,6 @@ public final class Plugin extends JavaPlugin {
         saveConfig();
     }
 
-    /*
     public void getDataWarps() {
         try(Connection connection = DatabaseManager.getServerConnection()) {
             Statement statement = connection.createStatement();
@@ -99,10 +108,5 @@ public final class Plugin extends JavaPlugin {
         }
     }
 
-     */
-
-    public static Plugin getInstance() {
-        return instance;
-    }
 
 }

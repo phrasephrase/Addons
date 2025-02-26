@@ -3,7 +3,7 @@ hexColor: "#00ff00"
 bold: true
 
 message:
-  prefix: "ᴘᴇʀᴅᴏ: "
+  prefix: "[>>] "
   checking: "&fВы не являетесь игроком"
   permission: "&fУ вас нет прав"
 
@@ -74,3 +74,8 @@ message:
       open: "&fВы открыли эндер-сундук &6{name}"
     reload:
       succesful: "&fВы перезагрузили плагин"
+
+database:
+  url: ""
+  username: ""
+  password: ""

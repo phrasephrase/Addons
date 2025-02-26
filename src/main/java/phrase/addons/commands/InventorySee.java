@@ -25,26 +25,26 @@ import java.util.stream.Collectors;
 
 public class InventorySee implements CommandExecutor, Listener {
 
-    private static String hex = Plugin.getInstance().getConfig().getString("hexColor");
+    private static String hex = Plugin.instance.getConfig().getString("hexColor");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
                              @NotNull String s, @NotNull String[] strings) {
 
         if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.checking")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.checking")));
             return true;
         }
 
         Player player = (Player) commandSender;
 
         if(!player.hasPermission("addons.invsee")) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) +color(Plugin.getInstance().getConfig().getString("message.permission")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) +color(Plugin.instance.getConfig().getString("message.permission")));
             return true;
         }
 
         if(strings.length < 1) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.invsee.usage")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.invsee.usage")));
             return true;
         }
 
@@ -52,7 +52,7 @@ public class InventorySee implements CommandExecutor, Listener {
         Player targetPlayer = Bukkit.getPlayer(name);
 
         if(targetPlayer == null) {
-            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.invsee.player")));
+            commandSender.sendMessage(UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.invsee.player")));
         }
 
 
@@ -111,7 +111,7 @@ public class InventorySee implements CommandExecutor, Listener {
         inv.setItem(50, item);
 
         player.openInventory(inv);
-        String openInventory = (UtilHexColor.colorize(hex, Plugin.getInstance().getConfig().getString("message.prefix")) + color(Plugin.getInstance().getConfig().getString("message.command.invsee.open")));
+        String openInventory = (UtilHexColor.colorize(hex, Plugin.instance.getConfig().getString("message.prefix")) + color(Plugin.instance.getConfig().getString("message.command.invsee.open")));
         openInventory = openInventory.replace("{player}", targetPlayer.getName());
         player.sendMessage(openInventory);
         return true;
